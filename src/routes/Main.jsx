@@ -36,7 +36,7 @@ export default function Main() {
                 setShowModal(
                     <Modal>
                         <div className="bg-white p-5 rounded-lg shadow-lg w-100">
-                            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-gray-700">Register Error</h1>
+                            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-gray-700">Login Error</h1>
                             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 mt-3">{error}</p>
                             <button className="bg-blue-500 hover:bg-blue-600 focus:bg-blue-600 w-full p-2 text-sm sm:text-base md:text-lg lg:text-xl text-white mt-5 rounded-lg" onClick={() => setShowModal(null)}>
                                 Close 
