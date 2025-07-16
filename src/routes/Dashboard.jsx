@@ -1,6 +1,6 @@
 import { auth, db } from "../firebase-config";
 import { signOut, onAuthStateChanged} from "firebase/auth";
-import { serverTimestamp, doc, getDoc, collection, query, where, onSnapshot, deleteDoc, updateDoc } from "firebase/firestore";
+import { serverTimestamp, doc, getDoc, collection, query, where, onSnapshot, deleteDoc } from "firebase/firestore";
 import { onSnapshot as onSubSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -52,7 +52,7 @@ export default function Dashboard() {
     const saveEditBookmark = async () => {
         if (!selectedTag || !editingBookmark) return;
         const bookmarkRef = doc(db, "tags", selectedTag.id, "bookmarks", editingBookmark.id);
-        await updateDoc(bookmarkRef, {
+        await bookmarkRef.update({
             name: bookmarkName,
             url: bookmarkUrl,
         });
