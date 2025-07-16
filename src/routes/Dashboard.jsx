@@ -205,14 +205,14 @@ export default function Dashboard() {
                         </button>
                     </div>
                 </aside>
-                <aside className="lg:hidden bg-gray-800 text-white flex items-center justify-between px-6 fixed w-full top-0 z-50 h-[50px]">
+                <div className="lg:hidden bg-gray-800 text-white flex items-center justify-between px-6 fixed w-full top-0 z-50 h-[50px]">
                     <div className="flex items-center justify-between mx-auto container">
                         <h1 className="font-semibold text-md sm:text-lg md:text-xl"> @{user && user.username}</h1>
                         <button onClick={() => setIsOpen(!isOpen)}>
                             <BsList className="text-xl hover:text-blue-500 focus:text-blue-500"/>
                         </button>
                     </div>
-                </aside>
+                </div>
                 <div className="px-6 py-4 overflow-y-auto mt-[50px] lg:mt-0">
                     <div className="container mx-auto">
                         {!selectedTag ? (
@@ -312,7 +312,7 @@ export default function Dashboard() {
                 </Modal>
             )}
             {isOpen && (
-                <nav className="bg-gray-800 text-white px-5 py-3 fixed top-12 w-full z-40 lg:hidden text-sm rounded-b-lg h-[calc(100dvh-3rem)]">
+                <nav className="bg-gray-800 text-white px-5 py-3 fixed top-12 w-full z-40 lg:hidden text-sm h-[calc(100dvh-3rem)]">
                     <div className="mx-auto container flex flex-col flex-1 min-h-0 h-full">
                         <button className="flex items-center gap-2 text-md hover:text-blue-500 focus:text-blue-500" onClick={() => handlerCreateTag()}>
                             <FaPlus/>
