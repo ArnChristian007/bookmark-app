@@ -1,5 +1,5 @@
 import { CiMail, CiUser, CiLock } from "react-icons/ci";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signUpWithEmail, signInWithEmail } from "../firebase-utility";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
@@ -12,6 +12,9 @@ export default function Main() {
     const [check, setCheck] = useState(false);
     const [showModal, setShowModal] = useState(null);
     const navigate = useNavigate();
+    useEffect(() => {
+        document.title = register ? "Bookmark Management - Login" : "Bookmark Management - Sign Up";
+    }, [register]);
     const handlerAuth = async(e) => {
         e.preventDefault();
         if (register) {
@@ -136,15 +139,6 @@ export default function Main() {
                         )}
                         {!register && (
                             <>
-                                <div className="mt-5 flex items-center justify-between text-gray-600 w-full">
-                                    <div className="flex items-center gap-2">
-                                        <input type="checkbox" className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5"/>
-                                        <label className="text-sm sm:text-base md:text-lg lg:text-xl">Remember Me</label>
-                                    </div>
-                                    <button type="button" className="text-sm sm:text-base md:text-lg lg:text-xl text-blue-400 hover:underline">
-                                        Forgot Password?
-                                    </button>
-                                </div>
                                 <button type="submit" className="bg-blue-400 hover:bg-blue-500 focus:bg-blue-500 w-full p-3 text-sm sm:text-base md:text-lg lg:text-xl text-white mt-5 rounded-lg">
                                     Log In
                                 </button>

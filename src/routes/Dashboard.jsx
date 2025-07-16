@@ -25,8 +25,12 @@ export default function Dashboard() {
     const [bookmarkUrl, setBookmarkUrl] = useState("");
     const [editBookmarkModal, setEditBookmarkModal] = useState(false);
     const [editingBookmark, setEditingBookmark] = useState(null);
+    const [logoutModal, setLogoutModal] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
+    useEffect(() => {
+        document.title = "Bookmark Management - Dashboard";
+    }, []);
     const addBookmark = async () => {
         if (!selectedTag || !bookmarkName || !bookmarkUrl) return;
         const bookmarksCol = collection(db, "tags", selectedTag.id, "bookmarks");
@@ -99,8 +103,7 @@ export default function Dashboard() {
         return () => unsub();
     }, [selectedTag]);
     const handlerLogout = async() => {
-        await signOut(auth);
-        navigate("/");
+        setLogoutModal(true);
     }
     const addTag = async() => {
         await addDocument("tags", {
@@ -122,6 +125,25 @@ export default function Dashboard() {
     };
     return (
         <>
+            {logoutModal && (
+                <Modal>
+                    <div className="bg-white p-5 rounded-lg shadow-lg w-100">
+                        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-gray-700">Logout Confirmation</h1>
+                        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 mt-2">Are you sure you want to logout?</p>
+                        <div className="flex flex-row gap-3 mt-5">
+                            <button
+                                className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 w-full"
+                                onClick={async () => {
+                                await signOut(auth);
+                                navigate("/");
+                                setLogoutModal(false);}}>
+                                Logout
+                            </button>
+                            <button className="bg-gray-500 text-white p-2 rounded-lg hover:bg-gray-600 w-full" onClick={() => setLogoutModal(false)}>Back</button>
+                        </div>  
+                    </div>
+                </Modal>
+            )}
             {showModal && (
                 <Modal>
                     <div className="bg-white p-5 rounded-lg shadow-lg w-100">
@@ -143,7 +165,7 @@ export default function Dashboard() {
                     </div>
                 </Modal>
             )}
-            <div className="h-screen min-h-0 grid grid-rows-[50px_1fr] lg:grid-cols-[16rem_1fr] lg:grid-rows-none">
+            <div className="h-screen min-h-0 grid lg:grid-cols-[16rem_1fr] lg:grid-rows-none">
                 <aside className="bg-gray-800 text-white p-5 hidden lg:flex flex-col h-full min-h-0">
                     <h1 className="font-semibold text-xl">@{user && user.username}</h1>
                     <div className="border border-gray-500 mt-1"/>
@@ -183,7 +205,7 @@ export default function Dashboard() {
                         </button>
                     </div>
                 </aside>
-                <aside className="lg:hidden bg-gray-800 text-white flex items-center justify-between px-6">
+                <aside className="lg:hidden bg-gray-800 text-white flex items-center justify-between px-6 fixed w-full top-0 z-50 h-[50px]">
                     <div className="flex items-center justify-between mx-auto container">
                         <h1 className="font-semibold text-md sm:text-lg md:text-xl"> @{user && user.username}</h1>
                         <button onClick={() => setIsOpen(!isOpen)}>
@@ -191,7 +213,7 @@ export default function Dashboard() {
                         </button>
                     </div>
                 </aside>
-                <div className="px-6 py-4 overflow-y-auto">
+                <div className="px-6 py-4 overflow-y-auto mt-[50px] lg:mt-0">
                     <div className="container mx-auto">
                         {!selectedTag ? (
                             <div className="flex flex-col items-center justify-center h-screen">
